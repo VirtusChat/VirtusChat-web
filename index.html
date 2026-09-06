@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VirtusChat – Nativní Windows Klient</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- FLUSH WIN32 / DIRECTX 9 TOP SHELL (NO FLOATING ISLAND) -->
+    <header class="top-shell">
+        <div class="title-strip">
+            <div class="window-brand">
+                <div class="window-brand-icon">V</div>
+                <span>VirtusChat – Windows Client [DirectX 9 / v141_xp]</span>
+            </div>
+            <div class="window-controls">
+                <div class="win-btn">—</div>
+                <div class="win-btn">□</div>
+                <div class="win-btn close">✕</div>
+            </div>
+        </div>
+        <div class="nav-bar-strip">
+            <nav class="menu-items">
+                <a href="#prehled" class="menu-item">Přehled</a>
+                <a href="#moduly" class="menu-item">Architektura</a>
+                <a href="#zabezpeceni" class="menu-item">Kryptografie</a>
+                <a href="https://github.com/VirtusChat/VirtusChat-win" target="_blank" class="menu-item">GitHub</a>
+            </nav>
+            <a href="https://github.com/VirtusChat/VirtusChat-win/releases" target="_blank" class="btn-directx" style="padding: 6px 16px; font-size: 12px;">
+                Stáhnout v1.1.2 (.exe)
+            </a>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT WRAPPER -->
+    <main class="main-content" id="prehled">
+        <section class="hero-box">
+            <div class="raw-tag">ARCHITEKTURA NATIVNÍHO C++ VÝKONU</div>
+            <h1 class="hero-heading">
+                VIRTUSCHAT
+            </h1>
+            <p class="hero-lead">
+                Nativní desktopový klient zaměřený na nulovou režii, bleskový UDP přenos, 
+                špičkový audio engine WASAPI/Opus a hardwarové šifrování mbedTLS.
+            </p>
+
+            <div class="cta-row">
+                <a href="https://github.com/VirtusChat/VirtusChat-win/releases" target="_blank" class="btn-directx">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
+                    Stáhnout VirtusChat (.exe)
+                </a>
+                <a href="https://github.com/VirtusChat/VirtusChat-win" target="_blank" class="btn-directx btn-secondary-dx">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    Zdrojový kód na GitHubu
+                </a>
+            </div>
+
+            <!-- LIVE OBSIDIAN DIRECTX 9 CLIENT WINDOW -->
+            <div class="virtus-window">
+                <div class="virtus-titlebar">
+                    <span class="virtus-client-title">VirtusChat Client – Session #1 [Active Direct3D9 Device]</span>
+                    <div class="window-controls">
+                        <div class="win-btn">—</div>
+                        <div class="win-btn">□</div>
+                        <div class="win-btn close">✕</div>
+                    </div>
+                </div>
+                <div class="virtus-grid">
+                    <aside class="virtus-channels">
+                        <div class="cat-label">TEXTOVÉ KANÁLY</div>
+                        <div class="ch-row active"># hlavni-mistnost</div>
+                        <div class="ch-row"># c-vyvoj</div>
+                        <div class="ch-row"># vydani</div>
+
+                        <div class="cat-label">HLASOVÉ SPOJENÍ</div>
+                        <div class="ch-row">
+                            <span>🔊 Tým Alfa</span>
+                        </div>
+                        <div class="ch-row" style="padding-left: 20px;">
+                            <span class="voice-badge">●</span>
+                            <span style="color: #e2f0ff;">Daniel (Opus 48kHz)</span>
+                        </div>
+                    </aside>
+
+                    <section class="virtus-workspace">
+                        <div class="sunken-panel">
+                            <div class="sunken-heading">VirtusChat je připojen</div>
+                            <div class="sunken-sub">Šifrovaný UDP tunel aktivní (mbedTLS AES-256)</div>
+                            <div class="virtus-progress">
+                                <div class="virtus-bar"></div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULES ARCHITECTURE -->
+        <section id="moduly">
+            <div class="tech-grid">
+                <article class="tech-card">
+                    <div class="tech-icon">⚡</div>
+                    <h3 class="tech-title">Nativní UDP Socket Wrapper</h3>
+                    <p class="tech-desc">
+                        Optimalizovaný síťový subsystém postavený přímo na WinSock2 s podporou KCP a ENet protokolu pro nulové zpoždění paketů.
+                    </p>
+                </article>
+
+                <article class="tech-card">
+                    <div class="tech-icon">🎙️</div>
+                    <h3 class="tech-title">AudioEngine & WASAPI</h3>
+                    <p class="tech-desc">
+                        Nízkoúrovňový audio backend využívající WASAPI Exclusive mode a Waveform pro starší OS s hardwarovým kódováním přes Opus.
+                    </p>
+                </article>
+
+                <article class="tech-card">
+                    <div class="tech-icon">🔒</div>
+                    <h3 class="tech-title">mbedTLS Kryptografie</h3>
+                    <p class="tech-desc">
+                        Vojenské end-to-end šifrování zpráv i hlasových streamů: podpora pro AES, RSA, ChaCha20/Poly1305 bez závislosti na OpenSSL.
+                    </p>
+                </article>
+
+                <article class="tech-card">
+                    <div class="tech-icon">🎨</div>
+                    <h3 class="tech-title">DirectX 9 Obsidian Engine</h3>
+                    <p class="tech-desc">
+                        Vlastní vykreslovací jádro (Renderer.cpp) s hardware-akcelerovanými gradienty, texturami a 3D zkosením hran.
+                    </p>
+                </article>
+
+                <article class="tech-card">
+                    <div class="tech-icon">🖥️</div>
+                    <h3 class="tech-title">ScreenCapture & Media</h3>
+                    <p class="tech-desc">
+                        Nativní modul VirtusMedia pro zachytávání obrazovky a streamování videa s využitím VLC 2.2.8 SDK a FFmpeg.
+                    </p>
+                </article>
+
+                <article class="tech-card">
+                    <div class="tech-icon">⚙️</div>
+                    <h3 class="tech-title">Sada nástrojů MSVC v141_xp</h3>
+                    <p class="tech-desc">
+                        Kompilováno pro maximální kompatibilitu – běží nativně na Windows 11, 10, 7 i Windows XP SP3.
+                    </p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <!-- AUTHENTIC WIN32 STATUS BAR FOOTER -->
+    <footer class="win-statusbar">
+        <div class="status-part">
+            <span class="status-cell ok">● Stav: Připojeno (UDP/KCP)</span>
+            <span class="status-cell">Audio: WASAPI 48kHz</span>
+            <span class="status-cell">Render: Direct3D9 Hardware</span>
+        </div>
+        <div class="status-part">
+            <span class="status-cell">&copy; 2026 VirtusChat</span>
+        </div>
+    </footer>
+
+</body>
+</html>

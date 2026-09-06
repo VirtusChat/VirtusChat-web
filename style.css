@@ -1,0 +1,522 @@
+/* ==========================================================================
+   VIRTUSCHAT - RAW Y2K / DIRECTX 9 OBSIDIAN AESTHETIC
+   Exact reproduction of VirtusChat's Win32 / DirectX 9 UI
+   ========================================================================== */
+
+:root {
+    /* Authentic VirtusChat Palette from Renderer.h */
+    --bg-main: #04070c;
+    --bg-darkest: #010204;
+    --bg-cavity: #020812;
+    --bg-cavity-bot: #081223;
+    
+    /* Accents */
+    --accent-blue: #3d8dc9;
+    --accent-gloss-top: #0078b5;
+    --accent-gloss-bot: #004669;
+    --accent-cyan: #64c8ff;
+    --accent-glow: rgba(0, 120, 181, 0.4);
+
+    /* Text */
+    --text-white: #ffffff;
+    --text-silver: #c8c8c8;
+    --text-muted: #8892a0;
+
+    /* Borders & Bevels (Skeuomorphic Win32 / DirectX 9) */
+    --border-dark: #000000;
+    --border-bevel-light: rgba(210, 235, 255, 0.22);
+    --border-bevel-dark: rgba(0, 0, 0, 0.7);
+
+    /* Fonts */
+    --font-system: "Segoe UI", "Tahoma", "MS Sans Serif", Arial, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-system);
+    color: var(--text-white);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: #020408;
+
+    /* -------------------------------------------------------------
+       THE EXACT VIBRANT BLACK-TO-BLUE-IN-CENTER DIRECTX 9 GRADIENT:
+       Pitch black at top and bottom, glowing electric blue in center
+       ------------------------------------------------------------- */
+    background:
+        /* Center Electric Blue Aurora (Luminous & Deep) */
+        radial-gradient(ellipse 85% 55% at 50% 48%, rgba(0, 110, 230, 0.6) 0%, rgba(0, 65, 170, 0.4) 40%, rgba(0, 25, 75, 0.12) 75%, transparent 100%),
+        /* Horizontal Royal Blue Band fading to solid black */
+        linear-gradient(180deg, 
+            #020306 0%, 
+            #03060c 18%, 
+            #002f78 44%, 
+            #0048a8 50%, 
+            #002f78 56%, 
+            #03060c 82%, 
+            #010204 100%
+        );
+    background-attachment: fixed;
+}
+
+/* ==========================================================================
+   EDGE-TO-EDGE FLUSH MENU/HEADER (Zero Floating Island, Pure Win32 Shell)
+   ========================================================================== */
+.top-shell {
+    width: 100%;
+    background: linear-gradient(180deg, #182232 0%, #0c121c 100%);
+    border-bottom: 1px solid #000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.title-strip {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 16px;
+    background: linear-gradient(180deg, #0e1622 0%, #05080e 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 12px;
+}
+
+.window-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #e2f0ff;
+}
+
+.window-brand-icon {
+    width: 18px;
+    height: 18px;
+    background: linear-gradient(180deg, #0078b5, #004669);
+    border: 1px solid #64c8ff;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 900;
+    color: #fff;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.window-controls {
+    display: flex;
+    gap: 2px;
+}
+
+.win-btn {
+    width: 28px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #24354a 0%, #101924 100%);
+    border: 1px solid #000;
+    box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.2);
+    font-size: 10px;
+    color: #c8d8e8;
+    cursor: default;
+    border-radius: 2px;
+}
+
+.win-btn.close:hover {
+    background: linear-gradient(180deg, #d32020 0%, #8b0000 100%);
+    color: #fff;
+}
+
+.nav-bar-strip {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+}
+
+.menu-items {
+    display: flex;
+    gap: 4px;
+}
+
+.menu-item {
+    color: #d0d8e2;
+    text-decoration: none;
+    font-size: 13px;
+    padding: 4px 12px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    transition: all 0.15s;
+}
+
+.menu-item:hover {
+    background: linear-gradient(180deg, #1e3650 0%, #0f1c2b 100%);
+    border: 1px solid rgba(100, 180, 255, 0.4);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    color: #fff;
+}
+
+/* ==========================================================================
+   BUTTONS (DIRECT TRANSLATION OF DrawGlossyButton - ZERO WHITE SPLIT LINES)
+   ========================================================================== */
+.btn-directx {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 3px;
+    cursor: pointer;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+    
+    /* 1. Base Gradient (Deep 3D Blue/Black Gloss) from Renderer.cpp */
+    background: linear-gradient(180deg, #0078b5 0%, #004669 100%);
+    
+    /* 2. Outer Bevel & 3. Inner Bevel Light/Shadow from Renderer.cpp */
+    border: 1px solid #000000;
+    box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.45),   /* Top highlight */
+        inset 0 -1px 0 rgba(100, 200, 255, 0.35),  /* Bottom catch light */
+        0 2px 8px rgba(0, 0, 0, 0.8),
+        0 0 12px rgba(0, 120, 181, 0.3);           /* Ambient blue glow */
+    
+    transition: all 0.15s ease;
+}
+
+/* Smooth continuous sheen without any hard white line */
+.btn-directx::before {
+    content: "";
+    position: absolute;
+    top: 1px; left: 1px; right: 1px;
+    height: 45%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border-radius: 2px 2px 0 0;
+    pointer-events: none;
+}
+
+.btn-directx:hover {
+    background: linear-gradient(180deg, #0092dd 0%, #005682 100%);
+    box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.65),
+        inset 0 -1px 0 rgba(100, 200, 255, 0.5),
+        0 0 18px rgba(0, 150, 255, 0.6);
+    border-color: #3d8dc9;
+}
+
+.btn-directx:active {
+    background: linear-gradient(180deg, #004669 0%, #002b40 100%);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.8);
+    transform: translateY(1px);
+}
+
+.btn-secondary-dx {
+    background: linear-gradient(180deg, #253346 0%, #101824 100%);
+    box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.6),
+        0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.btn-secondary-dx:hover {
+    background: linear-gradient(180deg, #32445e 0%, #162234 100%);
+    border-color: #5c7eab;
+    box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.35),
+        0 0 14px rgba(60, 100, 160, 0.4);
+}
+
+/* ==========================================================================
+   MAIN WRAPPER & HERO
+   ========================================================================== */
+.main-content {
+    flex: 1;
+    max-width: 1040px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+}
+
+.hero-box {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.raw-tag {
+    display: inline-block;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #64c8ff;
+    background: #020710;
+    border: 1px solid #1a3c60;
+    box-shadow: inset 0 0 10px rgba(0, 100, 200, 0.3);
+    margin-bottom: 16px;
+}
+
+.hero-heading {
+    font-size: 46px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    color: #ffffff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9), 0 0 25px rgba(0, 120, 220, 0.35);
+}
+
+.hero-lead {
+    font-size: 16px;
+    color: #b8c8d8;
+    max-width: 620px;
+    margin: 0 auto 30px;
+    line-height: 1.5;
+}
+
+.cta-row {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 45px;
+}
+
+/* ==========================================================================
+   AUTHENTIC OBSIDIAN WINDOW FRAME (1:1 VIRTUSCHAT RUNTIME WINDOW)
+   ========================================================================== */
+.virtus-window {
+    background: linear-gradient(180deg, #0a111a 0%, #030508 100%);
+    border: 1px solid #000;
+    border-radius: 4px;
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.95),
+        0 0 40px rgba(0, 60, 140, 0.3),
+        inset 1px 1px 0 rgba(210, 235, 255, 0.25);
+    overflow: hidden;
+    margin-bottom: 60px;
+}
+
+.virtus-titlebar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 12px;
+    background: linear-gradient(180deg, #1b283a 0%, #091018 100%);
+    border-bottom: 1px solid #000;
+}
+
+.virtus-client-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #d8e6f4;
+    text-shadow: 0 1px 2px #000;
+    letter-spacing: 0.3px;
+}
+
+.virtus-grid {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: 380px;
+    background: #020407;
+}
+
+/* Sunken Obsidian Cavity Sidebars */
+.virtus-channels {
+    background: linear-gradient(180deg, #040810 0%, #020408 100%);
+    border-right: 1px solid #000;
+    box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.05);
+    padding: 12px;
+}
+
+.cat-label {
+    font-size: 10px;
+    font-weight: 800;
+    color: #4a6688;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+    margin-top: 10px;
+}
+
+.cat-label:first-child { margin-top: 0; }
+
+.ch-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    font-size: 12px;
+    color: #9ab0c4;
+    border-radius: 2px;
+    border: 1px solid transparent;
+    cursor: default;
+    margin-bottom: 2px;
+}
+
+.ch-row.active {
+    background: linear-gradient(180deg, #0e2946 0%, #051424 100%);
+    border: 1px solid #1a4f82;
+    box-shadow: inset 0 1px 0 rgba(100, 200, 255, 0.3);
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.voice-badge {
+    color: #00ff88;
+    font-size: 11px;
+    text-shadow: 0 0 6px #00ff88;
+}
+
+/* Chat Main View */
+.virtus-workspace {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: 
+        radial-gradient(circle at center, rgba(0, 60, 130, 0.25) 0%, transparent 70%),
+        linear-gradient(180deg, #03060a 0%, #010204 100%);
+}
+
+/* Sunken Cavity Panel (DrawBlurredPanel / Cavity) */
+.sunken-panel {
+    background: linear-gradient(180deg, #020814 0%, #061022 100%);
+    border: 1px solid #000;
+    border-radius: 3px;
+    box-shadow: 
+        inset 1px 1px 2px rgba(0, 0, 0, 0.9),
+        inset -1px -1px 0 rgba(255, 255, 255, 0.08),
+        0 10px 30px rgba(0, 0, 0, 0.7);
+    padding: 24px 30px;
+    width: 380px;
+    text-align: center;
+}
+
+.sunken-heading {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 4px;
+}
+
+.sunken-sub {
+    font-size: 12px;
+    color: #7b94b0;
+    margin-bottom: 16px;
+}
+
+.virtus-progress {
+    height: 8px;
+    background: #000;
+    border: 1px solid #162438;
+    border-radius: 1px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.virtus-bar {
+    width: 72%;
+    height: 100%;
+    background: linear-gradient(90deg, #0078b5, #3d8dc9);
+    box-shadow: 0 0 10px #3d8dc9;
+}
+
+/* ==========================================================================
+   TECHNICAL MODULE CARDS (SKEUOMORPHIC DIRECTX ARCHITECTURE)
+   ========================================================================== */
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+    margin-bottom: 50px;
+}
+
+.tech-card {
+    background: linear-gradient(180deg, #08101a 0%, #03050a 100%);
+    border: 1px solid #000;
+    border-radius: 3px;
+    box-shadow: 
+        inset 1px 1px 0 rgba(210, 235, 255, 0.15),
+        0 8px 20px rgba(0, 0, 0, 0.7);
+    padding: 22px;
+}
+
+.tech-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(180deg, #0e2946 0%, #061424 100%);
+    border: 1px solid #1a4f82;
+    box-shadow: inset 0 1px 0 rgba(100, 200, 255, 0.3);
+    border-radius: 2px;
+    font-size: 15px;
+    margin-bottom: 12px;
+}
+
+.tech-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.tech-desc {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #92a4b8;
+}
+
+/* ==========================================================================
+   WIN32 STATUS BAR FOOTER
+   ========================================================================== */
+.win-statusbar {
+    width: 100%;
+    background: linear-gradient(180deg, #182232 0%, #0d141e 100%);
+    border-top: 1px solid #000;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    padding: 6px 16px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #7b94b0;
+}
+
+.status-part {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.status-cell {
+    border: 1px solid #000;
+    border-top: 1px solid rgba(0, 0, 0, 0.9);
+    border-left: 1px solid rgba(0, 0, 0, 0.9);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2px 8px;
+    background: #060a10;
+    border-radius: 2px;
+    color: #a0b6cc;
+}
+
+.status-cell.ok {
+    color: #00ff88;
+}
