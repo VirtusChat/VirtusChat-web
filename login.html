@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VirtusChat - Přihlášení k systému Windows</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💬</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            font-family: "Tahoma", "Segoe UI", Arial, sans-serif;
+            background-color: #00138c;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            color: #ffffff;
+        }
+
+        /* Horní a spodní modré pruhy Windows XP Welcome Screen */
+        .top-bar {
+            height: 80px;
+            background: linear-gradient(to bottom, #001f99 0%, #002aa8 50%, #001b8b 100%);
+            border-bottom: 2px solid #0055ea;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            flex-shrink: 0;
+        }
+
+        .bottom-bar {
+            height: 90px;
+            background: linear-gradient(to bottom, #001b8b 0%, #002aa8 50%, #001777 100%);
+            border-top: 2px solid #0055ea;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            flex-shrink: 0;
+        }
+
+        /* Střední obsahová část s ikonickým vertikálním oddělovačem */
+        .center-area {
+            flex: 1;
+            background: radial-gradient(circle at center, #5a7edc 0%, #3054b9 45%, #0d2a8a 85%, #05186b 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 20px 40px;
+        }
+
+        .welcome-wrapper {
+            display: flex;
+            width: 100%;
+            max-width: 1050px;
+            height: 100%;
+            align-items: center;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Levá strana - Windows XP logo + VirtusChat */
+        .left-side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            padding-right: 50px;
+            text-align: right;
+        }
+
+        .win-logo-box {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            margin-bottom: 15px;
+        }
+
+        .win-flag {
+            display: grid;
+            grid-template-columns: repeat(2, 22px);
+            grid-gap: 3px;
+            margin-bottom: 12px;
+            transform: skew(-8deg, -4deg) rotate(-3deg);
+            filter: drop-shadow(2px 3px 4px rgba(0,0,0,0.5));
+        }
+
+        .flag-pane {
+            width: 22px;
+            height: 22px;
+            border-radius: 2px;
+        }
+        .pane-red    { background: radial-gradient(circle at 30% 30%, #ff6b6b, #d91414); }
+        .pane-green  { background: radial-gradient(circle at 30% 30%, #7ee651, #3ba806); }
+        .pane-blue   { background: radial-gradient(circle at 30% 30%, #4da5ff, #0a64d3); }
+        .pane-yellow { background: radial-gradient(circle at 30% 30%, #ffea60, #f1a900); }
+
+        .logo-title-row {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+        }
+
+        .logo-virtus {
+            font-size: 34px;
+            font-weight: bold;
+            letter-spacing: -0.5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            color: #ffffff;
+        }
+
+        .logo-xp {
+            font-size: 38px;
+            font-style: italic;
+            font-weight: 900;
+            color: #ff8500;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            font-family: "Franklin Gothic Medium", Arial, sans-serif;
+        }
+
+        .logo-sub {
+            font-size: 13px;
+            color: #d2deff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 2px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+
+        .instruction-text {
+            font-size: 14px;
+            color: #e5edff;
+            max-width: 280px;
+            line-height: 1.4;
+            margin-top: 25px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Ikonická vertikální dělící linka XP přihlašovací obrazovky */
+        .divider {
+            width: 2px;
+            height: 70%;
+            background: linear-gradient(to bottom, 
+                rgba(255,255,255,0) 0%, 
+                rgba(255,255,255,0.4) 20%, 
+                rgba(255,140,0,0.9) 45%, 
+                rgba(255,255,255,0.8) 55%, 
+                rgba(255,255,255,0.3) 80%, 
+                rgba(255,255,255,0) 100%
+            );
+            box-shadow: 0 0 10px rgba(255, 170, 50, 0.6);
+        }
+
+        /* Pravá strana - Pouze uživatel Host */
+        .right-side {
+            flex: 1.3;
+            padding-left: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .user-card {
+            display: flex;
+            align-items: center;
+            padding: 14px 18px;
+            border-radius: 8px;
+            background: rgba(0, 30, 120, 0.4);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25), 0 4px 14px rgba(0,0,0,0.35);
+            max-width: 390px;
+        }
+
+        .avatar-frame {
+            width: 60px;
+            height: 60px;
+            border-radius: 6px;
+            border: 2px solid #ffcc00;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+            background: linear-gradient(135deg, #ffd000, #ff8c00);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+
+        .user-info {
+            margin-left: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 1;
+        }
+
+        .user-name {
+            font-size: 19px;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            margin-bottom: 3px;
+        }
+
+        .user-status {
+            font-size: 12px;
+            color: #b9d2ff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            margin-bottom: 8px;
+        }
+
+        /* Formulář s heslem */
+        .password-form {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .password-form label {
+            font-size: 12px;
+            color: #dce7ff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+
+        .input-xp {
+            height: 26px;
+            background: #ffffff;
+            border: 1px solid #7f9db9;
+            color: #000000;
+            font-size: 14px;
+            letter-spacing: 2.5px;
+            padding: 2px 8px;
+            border-radius: 2px;
+            outline: none;
+            width: 155px;
+            font-family: inherit;
+        }
+
+        .input-xp:focus {
+            border-color: #0055ea;
+            box-shadow: 0 0 5px #4da5ff;
+        }
+
+        /* Zelené XP tlačítko se šipkou (Go) */
+        .go-btn {
+            width: 26px;
+            height: 26px;
+            background: radial-gradient(circle at 35% 35%, #8ae942 0%, #43a808 60%, #206800 100%);
+            border: 1px solid #1c5c00;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.6);
+            transition: filter 0.1s ease, transform 0.05s ease;
+        }
+
+        .go-btn:hover {
+            filter: brightness(1.15);
+        }
+
+        .go-btn.pressed {
+            transform: scale(0.92);
+            filter: brightness(0.85);
+        }
+
+        .go-btn svg {
+            width: 13px;
+            height: 13px;
+            fill: #ffffff;
+            filter: drop-shadow(0 1px 1px rgba(0,0,0,0.6));
+        }
+
+        /* OBRAZOVKA NAČÍTÁNÍ DESKTOPU (Welcome Screen) */
+        .loading-screen {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, #5a7edc 0%, #3054b9 45%, #0d2a8a 85%, #05186b 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 20;
+        }
+
+        .loading-screen.visible {
+            display: flex;
+            opacity: 1;
+        }
+
+        .loading-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 22px;
+        }
+
+        .loading-user-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .loading-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 8px;
+            border: 3px solid #ffcc00;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            background: linear-gradient(135deg, #ffd000, #ff8c00);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+        }
+
+        .loading-user-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        /* Typické Windows XP / 7 točící se načítací kolečko */
+        .xp-spinner {
+            width: 44px;
+            height: 44px;
+            position: relative;
+            animation: xpRotate 1.2s linear infinite;
+        }
+
+        .xp-spinner-dot {
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.9);
+        }
+
+        .xp-spinner-dot:nth-child(1) { top: 0; left: 19px; opacity: 1; }
+        .xp-spinner-dot:nth-child(2) { top: 5px; left: 32px; opacity: 0.88; }
+        .xp-spinner-dot:nth-child(3) { top: 18px; left: 37px; opacity: 0.75; }
+        .xp-spinner-dot:nth-child(4) { top: 31px; left: 32px; opacity: 0.62; }
+        .xp-spinner-dot:nth-child(5) { top: 37px; left: 19px; opacity: 0.5; }
+        .xp-spinner-dot:nth-child(6) { top: 31px; left: 6px; opacity: 0.38; }
+        .xp-spinner-dot:nth-child(7) { top: 18px; left: 0; opacity: 0.25; }
+        .xp-spinner-dot:nth-child(8) { top: 5px; left: 6px; opacity: 0.13; }
+
+        @keyframes xpRotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-text {
+            font-size: 17px;
+            color: #e5edff;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+            font-style: italic;
+        }
+
+        .loading-subtext {
+            font-size: 12px;
+            color: #a4c5ff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            margin-top: -12px;
+        }
+
+        /* ========================================================
+           WINDOWS XP BLUESCREEN UVNITŘ LOGIN.HTML (BSOD OVERLAY)
+           ======================================================== */
+        .bsod-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #0000aa;
+            color: #ffffff;
+            font-family: "Lucida Console", "Courier New", Courier, monospace;
+            font-size: 16px;
+            line-height: 1.5;
+            padding: 40px 24px;
+            z-index: 1000;
+            overflow-y: auto;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .bsod-screen.active {
+            display: flex;
+        }
+
+        .bsod-container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .bsod-highlight {
+            display: inline-block;
+            background-color: #aaaaaa;
+            color: #0000aa;
+            font-weight: bold;
+            padding: 2px 8px;
+            margin-bottom: 24px;
+            letter-spacing: 1px;
+        }
+
+        .bsod-p {
+            margin-bottom: 18px;
+            text-align: justify;
+        }
+
+        .bsod-ul {
+            list-style-type: none;
+            margin-bottom: 22px;
+            padding-left: 0;
+        }
+
+        .bsod-ul li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 10px;
+        }
+
+        .bsod-ul li::before {
+            content: "*";
+            position: absolute;
+            left: 4px;
+            top: 0;
+        }
+
+        .bsod-tech-title {
+            margin-top: 24px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .bsod-tech-code {
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+            word-break: break-all;
+        }
+
+        .bsod-btn {
+            display: inline-block;
+            background-color: #0000aa;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            font-family: inherit;
+            font-size: 14px;
+            padding: 8px 16px;
+            text-decoration: none;
+            cursor: pointer;
+            margin-top: 20px;
+            position: relative;
+            outline: none;
+            animation: btnGlitchIdle 2.5s infinite;
+        }
+
+        /* Neviditelný zvětšený hitbox pro hover, aby kurzor při poskakování animace neztrácel fokus */
+        .bsod-btn::before {
+            content: "";
+            position: absolute;
+            top: -16px;
+            bottom: -16px;
+            left: -20px;
+            right: -20px;
+        }
+
+        .bsod-btn:hover {
+            animation: btnGlitchFast 0.25s infinite;
+            background-color: #ffffff;
+            color: #0000aa;
+            box-shadow: -2px 0 #ff0055, 2px 0 #00ffff;
+        }
+
+        .bsod-btn.glitching {
+            animation: btnGlitchSevere 0.35s steps(2) infinite !important;
+            background-color: #ff0055 !important;
+            color: #ffffff !important;
+            border-color: #00ffff !important;
+        }
+
+        @keyframes btnGlitchIdle {
+            0%, 88%, 100% {
+                transform: translate(0, 0) skew(0deg);
+                filter: none;
+            }
+            89% {
+                transform: translate(-2px, 1px) skew(-2deg);
+                filter: drop-shadow(2px 0 #ff0055);
+            }
+            91% {
+                transform: translate(2px, -1px) skew(3deg);
+                filter: drop-shadow(-2px 0 #00ffff);
+            }
+            93% {
+                transform: translate(-1px, 2px);
+                opacity: 0.8;
+            }
+            95% {
+                transform: translate(0, 0) skew(0deg);
+                filter: none;
+                opacity: 1;
+            }
+        }
+
+        @keyframes btnGlitchFast {
+            0% { transform: translate(0, 0); clip-path: inset(0 0 0 0); }
+            20% { transform: translate(-2px, 2px) skew(-2deg); clip-path: inset(10% 0 60% 0); }
+            40% { transform: translate(2px, -2px) skew(2deg); clip-path: inset(40% 0 20% 0); }
+            60% { transform: translate(-1px, -1px); clip-path: inset(70% 0 5% 0); }
+            80% { transform: translate(3px, 1px) skew(-1deg); clip-path: inset(20% 0 50% 0); }
+            100% { transform: translate(0, 0); clip-path: inset(0 0 0 0); }
+        }
+
+        @keyframes btnGlitchSevere {
+            0% { transform: translate(-4px, 2px) skew(-6deg); box-shadow: -4px 0 #00ffff, 4px 0 #ff0055; }
+            25% { transform: translate(5px, -3px) skew(5deg); box-shadow: 4px 0 #00ffff, -4px 0 #ff0055; }
+            50% { transform: translate(-3px, -2px) skew(3deg); opacity: 0.6; }
+            75% { transform: translate(4px, 3px) skew(-4deg); opacity: 1; }
+            100% { transform: translate(0, 0) skew(0deg); }
+        }
+
+        .blink {
+            animation: blink 1s step-start infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* Spodní lišta Welcome Screen */
+        .bottom-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            padding: 6px 12px;
+            border-radius: 4px;
+            transition: background 0.15s;
+        }
+
+        .bottom-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .power-icon {
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle at 35% 35%, #ff5c5c 0%, #d81414 70%, #820000 100%);
+            border: 1px solid #730202;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.6);
+        }
+
+        .power-icon svg {
+            width: 16px;
+            height: 16px;
+            fill: #ffffff;
+        }
+
+        .xp-tip {
+            font-size: 12px;
+            color: #a7c4ff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+
+        /* Responzivita pro menší obrazovky */
+        @media (max-width: 768px) {
+            body {
+                overflow-y: auto;
+                height: auto;
+                min-height: 100vh;
+            }
+
+            .center-area {
+                padding: 30px 16px;
+            }
+
+            .welcome-wrapper {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .left-side {
+                align-items: center;
+                text-align: center;
+                padding-right: 0;
+            }
+
+            .win-logo-box {
+                align-items: center;
+            }
+
+            .divider {
+                width: 80%;
+                height: 2px;
+                background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,140,0,0.8), rgba(255,255,255,0));
+            }
+
+            .right-side {
+                padding-left: 0;
+                align-items: center;
+                width: 100%;
+            }
+
+            .user-card {
+                width: 100%;
+                max-width: 330px;
+            }
+
+            .bottom-bar {
+                flex-direction: column;
+                gap: 10px;
+                height: auto;
+                padding: 15px 20px;
+            }
+
+            .bsod-screen {
+                font-size: 14px;
+                padding: 20px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Horní lišta -->
+    <div class="top-bar"></div>
+
+    <!-- Střední prostor: XP Welcome Screen -->
+    <main class="center-area">
+        
+        <!-- Přihlašovací obrazovka -->
+        <div class="welcome-wrapper" id="welcomeWrapper">
+            
+            <!-- Levá část s XP logem a VirtusChat popisem -->
+            <section class="left-side">
+                <div class="win-logo-box">
+                    <div class="win-flag" aria-hidden="true">
+                        <div class="flag-pane pane-red"></div>
+                        <div class="flag-pane pane-green"></div>
+                        <div class="flag-pane pane-blue"></div>
+                        <div class="flag-pane pane-yellow"></div>
+                    </div>
+                    <div class="logo-title-row">
+                        <span class="logo-virtus">VirtusChat</span>
+                        <span class="logo-xp">xp</span>
+                    </div>
+                    <div class="logo-sub">Professional Edition</div>
+                </div>
+
+                <p class="instruction-text">
+                    Klepnutím zahájíte relaci v šifrované síti VirtusChat.
+                </p>
+            </section>
+
+            <!-- Vertikální barevný oddělovač -->
+            <div class="divider" aria-hidden="true"></div>
+
+            <!-- Pravá část: Pouze uživatel Host -->
+            <section class="right-side">
+                <div class="user-card" id="userCard">
+                    <div class="avatar-frame" title="Virtus Host">
+                        🐥
+                    </div>
+                    <div class="user-info">
+                        <div class="user-name">Host</div>
+                        <div class="user-status" id="userStatus">Zadejte své heslo</div>
+                        
+                        <form class="password-form" id="passwordForm" onsubmit="return false;">
+                            <label for="pwdInput">Heslo:</label>
+                            <input type="password" id="pwdInput" class="input-xp" readonly placeholder="" autocomplete="off">
+                            <button type="button" class="go-btn" id="goBtn" title="Přihlásit se">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-7.85-1.42 1.42L16.86 11H5v2z"/>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Obrazovka načítání desktopu (Windows XP Loading Screen) -->
+        <div class="loading-screen" id="loadingScreen">
+            <div class="loading-content">
+                <div class="loading-user-box">
+                    <div class="loading-avatar">
+                        🐥
+                    </div>
+                    <div class="loading-user-name">Host</div>
+                </div>
+
+                <!-- XP točící se kolečko -->
+                <div class="xp-spinner" aria-label="Načítání...">
+                    <div class="xp-spinner-dot"></div>
+                    <div class="xp-spinner-dot"></div>
+                    <div class="xp-spinner-dot"></div>
+                    <div class="xp-spinner-dot"></div>
+                    <div class="xp-spinner-dot"></div>
+                    <div class="xp-spinner-dot"></div>
+                    <div class="xp-spinner-dot"></div>
+                    <div class="xp-spinner-dot"></div>
+                </div>
+
+                <div class="loading-text">Načítání VirtusChat...</div>
+                <div class="loading-subtext">Probíhá inicializace DirectX 9 a synchronizace zpráv</div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Spodní lišta -->
+    <footer class="bottom-bar">
+        <button class="bottom-btn" onclick="triggerBsod()">
+            <div class="power-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                    <path d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42A7.92 7.92 0 0 1 20 12c0 4.42-3.58 8-8 8s-8-3.58-8-8c0-2.47 1.13-4.68 2.59-6.41L5.17 5.17A9.96 9.96 0 0 0 2 12c0 5.52 4.48 10 10 10s10-4.48 10-10c0-2.98-1.31-5.66-3.17-6.83z"/>
+                </svg>
+            </div>
+            <span>Vypnout počítač</span>
+        </button>
+
+        <div class="xp-tip">
+            VirtusChat Professional Edition Build 2600.xpsp_sp3_gdr
+        </div>
+    </footer>
+
+    <!-- VESTAVĚNÝ WINDOWS XP BLUESCREEN PŘÍMO V LOGIN.HTML -->
+    <div class="bsod-screen" id="bsodScreen">
+        <div class="bsod-container">
+            <div class="bsod-highlight">A problem has been detected in VirtusChat and session startup was aborted.</div>
+
+            <p class="bsod-p">STATUS_SYSTEM_WORK_IN_PROGRESS</p>
+
+            <p class="bsod-p">
+                Na tomto webu a klientu VirtusChat se momentálně usilovně pracuje (WORK_IN_PROGRESS).
+                Pokud vidíte tuto obrazovku poprvé, probíhá aktivní vývoj a nasazování nových modulů.
+                Pokud tato obrazovka přetrvává, postupujte podle následujících kroků:
+            </p>
+
+            <ul class="bsod-ul">
+                <li>Ujistěte se, že vývojáři dokončili kompilaci zdrojového kódu a aktualizaci serveru. Na tomto webu se právě pracuje.</li>
+                <li>Zkuste stránku navštívit později, jakmile budou dokončeny plánované stavební úpravy a synchronizace jádra.</li>
+                <li>Klepnutím na tlačítko Restart se vrátíte zpět na přihlašovací obrazovku.</li>
+            </ul>
+
+            <div class="bsod-tech-title">Technical information:</div>
+            <div class="bsod-tech-code">
+                *** STOP: 0x00000404 (0x574F524B, 0x494E5F50, 0x524F4752, 0x45535300)<br>
+                *** NA_TOMTO_WEBU_SE_PRACUJE.SYS - Address F73120AE base at F730C000, DateStamp 3d6dd67c
+            </div>
+
+            <p class="bsod-p">Beginning dump of physical memory<span class="blink">_</span></p>
+
+            <div>
+                <button onclick="glitchRestartBtn(this)" class="bsod-btn" id="restartBtn">Restart</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simulace rychlého a přirozeného psaní hesla o délce přesně 13 znaků
+        const TOTAL_CHARS = 13;
+        const passwordInput = document.getElementById('pwdInput');
+        const goBtn = document.getElementById('goBtn');
+        const welcomeWrapper = document.getElementById('welcomeWrapper');
+        const loadingScreen = document.getElementById('loadingScreen');
+        const bsodScreen = document.getElementById('bsodScreen');
+        const userStatus = document.getElementById('userStatus');
+
+        let currentChars = 0;
+
+        function getRandomDelay() {
+            // Rychlý úhoz: 45ms až 95ms s občasnou mikropauzou
+            const isThinkingPause = Math.random() < 0.15;
+            if (isThinkingPause) {
+                return Math.floor(Math.random() * 70) + 110; // mikropauza (110-180ms)
+            }
+            return Math.floor(Math.random() * 50) + 45; // rychlý úhoz (45-95ms)
+        }
+
+        function typeNextChar() {
+            if (currentChars < TOTAL_CHARS) {
+                currentChars++;
+                passwordInput.value = '•'.repeat(currentChars);
+                setTimeout(typeNextChar, getRandomDelay());
+            } else {
+                // Po dopsání 13 teček velmi krátká pauza a kliknutí
+                setTimeout(simulateSubmit, 200);
+            }
+        }
+
+        function simulateSubmit() {
+            // Vizuální stisknutí zeleného tlačítka
+            goBtn.classList.add('pressed');
+            userStatus.textContent = 'Ověřování hesla...';
+
+            setTimeout(function() {
+                goBtn.classList.remove('pressed');
+                startLoadingDesktop();
+            }, 180);
+        }
+
+        function startLoadingDesktop() {
+            // Fade-out úvodní obrazovky
+            welcomeWrapper.style.opacity = '0';
+            welcomeWrapper.style.transform = 'scale(0.98)';
+
+            setTimeout(function() {
+                welcomeWrapper.style.display = 'none';
+                // Zobrazit obrazovku načítání s XP kolečkem
+                loadingScreen.classList.add('visible');
+
+                // Počká přesně 2 sekundy a hodí Windows XP BlueScreen přímo v login.html
+                setTimeout(function() {
+                    triggerBsod();
+                }, 2000);
+            }, 300);
+        }
+
+        function triggerBsod() {
+            loadingScreen.classList.remove('visible');
+            loadingScreen.style.display = 'none';
+            welcomeWrapper.style.display = 'none';
+            bsodScreen.classList.add('active');
+            document.title = "VirtusChat - SYSTEM_WORK_IN_PROGRESS";
+        }
+
+        // Tlačítko Restart nedělá nic kromě glitchování
+        const corruptedTexts = [
+            "R̶e̵s̴t̵a̸r̶t̵",
+            "R#S!@RT?",
+            "NULL_PTR",
+            "0x00000404",
+            "CRITICAL_FAIL",
+            "R3$T@RT",
+            "DEAD_END"
+        ];
+
+        function glitchRestartBtn(btn) {
+            btn.classList.add('glitching');
+            const randomText = corruptedTexts[Math.floor(Math.random() * corruptedTexts.length)];
+            btn.textContent = randomText;
+
+            setTimeout(function() {
+                btn.classList.remove('glitching');
+                btn.textContent = "Restart";
+            }, 600);
+        }
+
+        // Klávesy v BSOD také restart nespustí, jen spustí glitch na tlačítku
+        window.addEventListener('keydown', function(e) {
+            if (bsodScreen.classList.contains('active')) {
+                if (e.key === 'Escape' || e.key === 'Enter') {
+                    const btn = document.getElementById('restartBtn');
+                    if (btn) glitchRestartBtn(btn);
+                }
+            }
+        });
+
+        // Spuštění animace psaní po načtení stránky (cca 350ms)
+        window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(typeNextChar, 350);
+        });
+    </script>
+</body>
+</html>
