@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VirtusChat - 404 PAGE_NOT_FOUND</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #0000aa;
+            color: #ffffff;
+            font-family: "Lucida Console", "Courier New", Courier, monospace;
+            font-size: 16px;
+            line-height: 1.5;
+            padding: 40px 24px;
+            user-select: none;
+            -webkit-user-select: none;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .highlight-bar {
+            display: inline-block;
+            background-color: #aaaaaa;
+            color: #0000aa;
+            font-weight: bold;
+            padding: 2px 8px;
+            margin-bottom: 24px;
+            letter-spacing: 1px;
+        }
+
+        p {
+            margin-bottom: 18px;
+            text-align: justify;
+        }
+
+        ul {
+            list-style-type: none;
+            margin-bottom: 22px;
+            padding-left: 0;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 10px;
+        }
+
+        ul li::before {
+            content: "*";
+            position: absolute;
+            left: 4px;
+            top: 0;
+        }
+
+        .tech-info-title {
+            margin-top: 24px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .tech-code {
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+            word-break: break-all;
+        }
+
+        .actions {
+            margin-top: 32px;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #0000aa;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            font-family: inherit;
+            font-size: 14px;
+            padding: 8px 16px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .btn:hover, .btn:focus {
+            background-color: #ffffff;
+            color: #0000aa;
+            outline: none;
+        }
+
+        .blink {
+            animation: blink 1s step-start infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                font-size: 14px;
+                padding: 20px 16px;
+            }
+
+            .highlight-bar {
+                font-size: 13px;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="highlight-bar">A problem has been detected in VirtusChat and the requested page could not be found.</div>
+
+        <p>VIRTUSCHAT_PAGE_FAULT_IN_NONPAGED_AREA</p>
+
+        <p>
+            If this is the first time you've seen this stop error screen in VirtusChat,
+            check the URL address for any typing mistakes. If this screen appears again, follow
+            these steps:
+        </p>
+
+        <ul>
+            <li>Check to make sure any requested VirtusChat room, link, or resource is properly spelled and still exists on the server. If this is a new installation or migration, ask your system administrator for updated links.</li>
+            <li>If problems continue, disable or remove any recently added browser extensions or bookmarklets. Try clearing your browser cache and cookies.</li>
+            <li>Press F5 or click Refresh to attempt reconnecting to VirtusChat.</li>
+        </ul>
+
+        <div class="tech-info-title">Technical information:</div>
+        <div class="tech-code">
+            *** STOP: 0x00000404 (0x00000000, 0x00000000, 0x00000000, 0x00000000)<br>
+            *** VIRTUSCHAT.SYS - Address F73120AE base at F730C000, DateStamp 3d6dd67c
+        </div>
+
+        <p>Beginning dump of physical memory<span class="blink">_</span></p>
+
+        <div class="actions">
+            <a href="/" class="btn">Restart</a>
+        </div>
+    </div>
+
+    <script>
+        // Klávesové zkratky: stiskem klávesy Escape nebo Enter se vrátíte domů
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' || e.key === 'Enter') {
+                window.location.href = '/';
+            }
+        });
+    </script>
+</body>
+</html>
