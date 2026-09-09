@@ -124,13 +124,11 @@ faqs: [
 
 ---
 
-## 👥 Tým projektu
+---
 
-- 👑 **Queen** — *Owner & Koordinační vedení*
-- 🛡️ **Koťák** — *Dohled nad procesem, architekturou & bezpečností*
-- 💻 **MrTomiCZ** — *Developer*
-- 💻 **NoName** — *Developer*
-- 💻 **Tobias** — *Developer*
+## 👥 Kontakt & Tým
+- **Správce repozitáře**: Jakub Kotoul ([@Kotakovec](https://github.com/Kotakovec))
+- **Organizace**: [VirtusChat](https://github.com/VirtusChat)
 
 ---
 
