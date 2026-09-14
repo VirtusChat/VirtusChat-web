@@ -19,7 +19,7 @@
       --bg-darkest: #010204;
       --bg-cavity: #020812;
       --bg-cavity-bot: #081223;
-      
+
       /* Accents */
       --accent-blue: #3d8dc9;
       --accent-gloss-top: #0078b5;
@@ -1119,7 +1119,7 @@
       titleBarText: "VitusChat – Windows Client [DirectX 9 / v141_xp]",
       heroTitle: "VitusChat",
       heroSubtitle: "Čistá, spolehlivá a plně šifrovaná chatovací aplikace. Spojuje vojenské end-to-end šifrování, kanály a bleskurychlé doručování zpráv bez zbytečností a bez špehování.",
-      
+
       // 2. TŘI HLAVNÍ METRIKY
       metrics: [
         { value: "99.99% SLA", label: "Vysoká dostupnost sítě" },
@@ -1170,21 +1170,17 @@
       ],
 
       // 5. NÁŠ TÝM - SNADNÉ PŘIDÁVÁNÍ ODDÍLŮ A ČLENŮ
-      // • Automaticky MAX 3 NA ŘÁDEK – 4. člen skočí na nový řádek pod ně.
-      // • Když je 1 nebo 2 na řádku, automaticky se vycentrují na střed!
-      // • Po kliknutí na kartu se rozbalí POUZE daná karta a zobrazí kontaktní informace.
-      // • U každého řádku kontaktů můžete nastavit link: "..." a clickable: true/false (nebo nechat jen obyčejný text)!
       teamSections: [
         {
           title: "Vedení projektu (Project Leadership)",
           icon: "👑",
-          isLeadership: true, // Speciální zlatavé/vedoucí zvýraznění
+          isLeadership: true,
           members: [
             {
               avatar: "icons/queen.png",
               name: "Queen",
               role: "CEO",
-              badgeType: "owner", // 'owner', 'security', nebo nechte prázdné
+              badgeType: "owner",
               desc: "Majitel projektu VitusChat. Koordinuje celkovou práci týmu, řídí strategické směřování a organizuje vývojové procesy.",
               contacts: [
                 { text: "Discord: queen_official", link: "", clickable: false },
@@ -1206,12 +1202,12 @@
             }
           ]
         },
-       }
-title: "Vývojový tým (Developers)",
+        {
+          title: "Vývojový tým (Developers)",
           icon: "💻",
           isLeadership: false,
           members: [
-        {
+            {
               avatar: "icons/tobias.png",
               name: "Tobias",
               role: "Lead Developer",
@@ -1223,8 +1219,7 @@ title: "Vývojový tým (Developers)",
                 { text: "GitHub: github.com/Tobias", link: "https://github.com", clickable: true }
               ]
             },
-        
-           {
+            {
               avatar: "icons/mrtomicz.png",
               name: "MrTomiCZ",
               role: "Developer",
@@ -1247,39 +1242,19 @@ title: "Vývojový tým (Developers)",
                 { text: "E-mail: noname@virtuschat.com", link: "mailto:noname@virtuschat.com", clickable: true },
                 { text: "GitHub: github.com/NoName", link: "https://github.com", clickable: true }
               ]
-            },
-            
-          ]
-        }
-        /* PŘÍKLAD: JAK PŘIDAT DALŠÍ ODDÍL (např. Testeři): 
-        ,{
-          title: "Tým testerů (Quality Assurance)",
-          icon: "🧪",
-          isLeadership: false,
-          members: [
-            {
-              avatar: "tester1.png", // nebo emoji např. "🧪"
-              name: "TesterName",
-              role: "Lead QA Tester",
-              badgeType: "",
-              desc: "Testování stability, zátěžové testy a hlášení chyb."
             }
           ]
         }
-        */
       ],
 
       // 6. CENTRUM STAHOVÁNÍ
-      // Zde můžete každou platformu jednoduše zapnout (true) nebo vypnout (false)!
-      // - true:  tlačítko bude zelené, aktivní a přesměruje na odkaz (GitHub / Web)
-      // - false: tlačítko bude šedé, neklikací a označené jako "Nedostupné" / "Ve vývoji"
       downloads: [
         {
           icon: "🌐",
           title: "Webová aplikace",
           subtitle: "Běh v prohlížeči",
-          active: false, // <-- ZDE: stačí změnit na true a ihned funguje!
-          link: "404", // odkaz, kam to po aktivaci povede
+          active: false,
+          link: "404",
           statusActive: "Spustit v prohlížeči",
           statusDisabled: "Momentálně nedostupné"
         },
@@ -1287,7 +1262,7 @@ title: "Vývojový tým (Developers)",
           icon: "🪟",
           title: "Windows 11 / 10 / 7",
           subtitle: "Instalátor (.exe)",
-          active: true, // <-- ZDE: true = zapnuto / false = vypnuto
+          active: true,
           link: "https://github.com/VirtusChat/VirtusChat-win/releases",
           statusActive: "K dispozici ke stažení (.exe)",
           statusDisabled: "Momentálně nedostupné"
@@ -1296,7 +1271,7 @@ title: "Vývojový tým (Developers)",
           icon: "🪟",
           title: "Linux",
           subtitle: "Instalátor (.pkg)",
-          active: false, // <-- ZDE: true = zapnuto / false = vypnuto
+          active: false,
           link: "https://github.com/VirtusChat/VirtusChat-linux/releases",
           statusActive: "K dispozici ke stažení (.pkg)",
           statusDisabled: "Momentálně nedostupné"
@@ -1305,7 +1280,7 @@ title: "Vývojový tým (Developers)",
           icon: "🍎",
           title: "macOS",
           subtitle: "Apple Silicon & Intel",
-          active: false, // <-- ZDE: stačí změnit na true a ihned funguje!
+          active: false,
           link: "https://github.com/VirtusChat/VirtusChat-mac/releases",
           statusActive: "K dispozici ke stažení (.dmg)",
           statusDisabled: "Ve vývoji"
@@ -1314,7 +1289,7 @@ title: "Vývojový tým (Developers)",
           icon: "📱",
           title: "Android",
           subtitle: "Android telefony",
-          active: true, // <-- ZDE: stačí změnit na true a ihned funguje!
+          active: true,
           link: "https://github.com/VirtusChat/VirtusChat-android/releases",
           statusActive: "K dispozici ke stažení (.apk)",
           statusDisabled: "Ve vývoji"
@@ -1323,7 +1298,7 @@ title: "Vývojový tým (Developers)",
           icon: "📱",
           title: "iOS",
           subtitle: "Apple telefony",
-          active: false, // <-- ZDE: stačí změnit na true a ihned funguje!
+          active: false,
           link: "https://github.com/VirtusChat/VirtusChat-android/releases",
           statusActive: "K dispozici ke stažení (.apk)",
           statusDisabled: "Ve vývoji"
@@ -1365,7 +1340,7 @@ title: "Vývojový tým (Developers)",
   </div>
 
   <div class="aero-window">
-    
+
     <!-- Top Shell Title Bar -->
     <div class="title-bar">
       <div class="title-bar-left">
@@ -1487,9 +1462,7 @@ title: "Vývojový tým (Developers)",
         <span>👥</span> Náš tým
       </div>
 
-      <div class="glass-panel team-section-box" id="teamSectionsContainer">
-        <!-- Zde se automaticky vygenerují všechny oddíly týmu (vedení, developeři, testeři atd.) z VITUS_CONFIG.teamSections -->
-      </div>
+      <div class="glass-panel team-section-box" id="teamSectionsContainer"></div>
 
       <!-- Download Section -->
       <div id="download" class="section-title">
@@ -1600,7 +1573,7 @@ title: "Vývojový tým (Developers)",
         return src || fallbackEmoji;
       }
 
-      // 5. Náš tým (Dynamické renderování libovolného počtu oddílů - vedení, developeři, testeři...)
+      // 5. Náš tým
       const teamContainer = document.getElementById('teamSectionsContainer');
       if (teamContainer && VITUS_CONFIG.teamSections) {
         teamContainer.innerHTML = VITUS_CONFIG.teamSections.map((section, sIndex) => {
@@ -1708,15 +1681,13 @@ title: "Vývojový tým (Developers)",
     // Rozbalení a sbalení kontaktů člena týmu po kliknutí (vždy otevřen max. 1 najednou)
     function toggleTeamCard(cardEl) {
       const isAlreadyExpanded = cardEl.classList.contains('expanded');
-      
-      // Zavřeme všechny ostatní otevřené karty
+
       document.querySelectorAll('.team-member-card.expanded').forEach(otherCard => {
         if (otherCard !== cardEl) {
           otherCard.classList.remove('expanded');
         }
       });
 
-      // Pokud byla otevřená, zavře se; pokud byla zavřená, otevře se
       if (isAlreadyExpanded) {
         cardEl.classList.remove('expanded');
       } else {
@@ -1732,7 +1703,6 @@ title: "Vývojový tým (Developers)",
       document.getElementById('win7Clock').textContent = `${hours}:${minutes}`;
     }
 
-    // Zamezení nechtěnému posunu po refreshu (vynutí vždy horní pozici)
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
@@ -1741,7 +1711,6 @@ title: "Vývojový tým (Developers)",
       window.scrollTo(0, 0);
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
-      // Pokud je v adrese hash (např. #download), vyčistíme ho bez reloadu
       if (window.location.hash) {
         history.replaceState(null, null, ' ');
       }
